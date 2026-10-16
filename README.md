@@ -63,6 +63,25 @@ python -m wefun
 
 环境要求：Windows 10/11 + 微信 PC 客户端；Python 3.12+。
 
+## 项目结构
+
+```text
+wechat-entertainment/
+├── README.md               # 本文件
+├── docs/                   # 设计文档与游戏规则
+│   ├── architecture.md
+│   └── game-rules/
+├── src/wefun/
+│   ├── core/               # 消息总线、配置加载、日志
+│   ├── games/              # 群聊小游戏
+│   ├── emoji/              # 表情包机器人
+│   ├── lottery/            # 抽奖签到
+│   └── fun/                # 整活助手
+├── config/
+│   └── config.example.yaml # 配置模板
+└── tests/                  # pytest 测试
+```
+
 ---
 
 _本 README 会随项目推进持续更新。_
