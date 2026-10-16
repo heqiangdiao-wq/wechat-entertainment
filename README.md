@@ -42,6 +42,27 @@
 | 配置 | YAML + 环境变量 | 一处配置，处处生效 |
 | 测试 | pytest | 游戏规则必须可测、可回归 |
 
+## 快速开始
+
+> ⚠️ 项目尚在规划阶段，以下为预定流程，暂无法实际运行。
+
+```bash
+# 1. 克隆仓库
+git clone https://github.com/heqiangdiao-wq/wechat-entertainment.git
+cd wechat-entertainment
+
+# 2. 安装依赖（规划使用 uv）
+uv sync
+
+# 3. 复制配置模板并按需修改
+cp config/config.example.yaml config/config.yaml
+
+# 4. 启动（规划入口）
+python -m wefun
+```
+
+环境要求：Windows 10/11 + 微信 PC 客户端；Python 3.12+。
+
 ---
 
 _本 README 会随项目推进持续更新。_
