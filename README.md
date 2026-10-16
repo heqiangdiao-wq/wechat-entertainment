@@ -223,6 +223,59 @@ idle → waiting(凑人) → playing(轮流猜) → exploded(结算) → idle
 
 **榜单**：`/榜单 日|周` 查看积分榜，数据仅存本地。
 
+## 配置参考
+
+`config/config.example.yaml` 完整示例：
+
+```yaml
+wechat:
+  listen_groups: []          # 监听的群名，空 = 全部（需在 UI 层勾选）
+  reply_at_sender: true      # 回复时 @ 发起人
+
+command:
+  prefix: "/"                # 指令前缀
+  aliases:                   # 指令别名
+    bomb: [bz, 炸弹]
+    draw: [你画我猜]
+
+games:
+  bomb:
+    range: [1, 100]          # 秘密数字范围
+    idle_timeout_sec: 60     # 挂机超时
+  draw:
+    round_sec: 90
+    word_pack: builtin/cn-common
+
+points:
+  sign_base: 2               # 签到基础分
+  sign_bonus_streak: 3       # 连签 N 天起每天 +1
+
+privacy:
+  store_chat_log: false      # 是否记录群聊日志（默认否）
+```
+
+**所有配置项都有默认值**，删掉任何一行都能以默认配置启动。
+
+## 架构说明
+
+```text
+┌─────────────────────────────────────────┐
+│  adapters/   微信适配层（Playwright 驱动） │
+├─────────────────────────────────────────┤
+│  core/       消息总线 · 指令解析 · 插件加载 │
+├─────────────────────────────────────────┤
+│  plugins/    games / emoji / lottery / fun │
+├─────────────────────────────────────────┤
+│  store/      SQLite（积分/签到/对局状态）   │
+└─────────────────────────────────────────┘
+```
+
+**三条架构纪律**：
+
+1. **适配层可替换**：换成影刀 RPA 或未来的协议方案时，`plugins/` 零改动；
+2. **插件无特权**：插件只能通过 core 提供的 API 收发消息，不能直接碰微信窗口；
+3. **状态可弃**：SQLite 里除积分外都是可重放数据，删掉不影响下次启动。
+
 ---
 
 ## 更新日志
